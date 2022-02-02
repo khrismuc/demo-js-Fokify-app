@@ -35,7 +35,7 @@ const showRecipe = async function () {
 
 
   } catch (err) {
-    console.log("---> " + err.message);
+    console.error("---> " + err.message);
   }
 };
 
