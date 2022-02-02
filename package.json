@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "parcel": "^2.2.1",
+    "prettier": "^2.5.1"
+  },
+  "name": "Forkify",
+  "version": "1.0.0",
+  "description": "no description",
+  "main": "index.html",
+  "author": "elmi-elmi",
+  "license": "MIT"
+}
