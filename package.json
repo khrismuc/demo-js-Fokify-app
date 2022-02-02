@@ -1,12 +1,20 @@
 {
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.2.1",
     "parcel": "^2.2.1",
     "prettier": "^2.5.1"
   },
-  "name": "Forkify",
+  "name": "forkify",
   "version": "1.0.0",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
   "description": "no description",
-  "main": "index.html",
   "author": "elmi-elmi",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "core-js": "^3.21.0",
+    "regenerator-runtime": "^0.13.9"
+  }
 }
