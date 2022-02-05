@@ -7,7 +7,6 @@ _errorMessage = 'Search not found';
 _message = 'Success in search';
 
     _generateMarkup(){
-        console.log('*****4444(((((')
         return this._data.map(this._generateMarkupPreview).join('')
     }
     _generateMarkupPreview(res){
