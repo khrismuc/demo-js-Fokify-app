@@ -24,11 +24,12 @@ const showRecipe = async function () {
     recipeView.renderSpinner(recipeContainer);
 
     // loading recipe
-      await model.loadRecipe(id)
+    await model.loadRecipe(id)
 
     // rendering recipe
 
     recipeView.render(model.state.recipe)
+
 
 
   } catch (err) {
@@ -71,12 +72,18 @@ const controlSearchResult = async function(){
 const controlPagination = function(goto){
   resultView.render(model.getSearchResultsPerPage(goto))
   paginationView.render(model.state.search)
+}
 
-
+const controlServing = function(updateTo=1){
+  model.updateServing(updateTo)
+  recipeView.render(model.state.recipe)
 
 }
+
+
 const init = function(){
   recipeView.addHandlerRender(showRecipe)
+recipeView.addHandlerUpdateServing(controlServing)
   searchView.addHandlerSearch(controlSearchResult)
   paginationView.addHandlerClick(controlPagination)
 }

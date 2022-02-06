@@ -45,18 +45,22 @@ export const loadRecipe = async function (id) {
 };
 
 export const getSearchResultsPerPage = function(page = 1){
-    // console.log('page',page);
     state.search.page = page;
 
     const start = (page - 1) * RES_PER_PAGE;
     const end = page * RES_PER_PAGE;
 
-    // console.log('start',start);
-    // console.log('end',end);
-    // console.log('results:')
-    // console.log(state.search.results.slice(start,end))
 
     return state.search.results.slice(start,end);
 
+}
+
+
+export const updateServing = function(newServing=8){
+  console.log('update serving')
+  // console.log(state.recipe)
+  state.recipe.ingredients.forEach(ing=>ing.quantity = ing.quantity * newServing/state.recipe.servings)
+  state.recipe.servings = newServing;
+  // console.log(state.recipe)
 }
 

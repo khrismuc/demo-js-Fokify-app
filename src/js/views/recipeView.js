@@ -1,15 +1,11 @@
 import icon from "../../img/icons.svg";
-import View from './view'
+import View from "./view";
 import { Fraction } from "fractional";
-class RecipeView extends View{
+class RecipeView extends View {
   _parentElement = document.querySelector(".recipe");
   _data;
   _errorMessage = "No recipes found for your query. Please try again!";
   _message = "No bookmarks yet. Find a nice recipe and bookmark it :)";
-
-
-
-
 
   renderMessage(message = this._message) {
     const markup = ` <div class="message">
@@ -27,8 +23,14 @@ class RecipeView extends View{
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
 
-
-
+  addHandlerUpdateServing(handler) {
+    this._parentElement.addEventListener("click", function (e) {
+      const btnUpdateServ = e.target.closest(".btn--update-servings");
+      if (!btnUpdateServ) return;
+      const { updateTo } = btnUpdateServ.dataset;
+      if (+updateTo > 0) handler(+updateTo);
+    });
+  }
 
   _generateMarkup() {
     return `
@@ -60,12 +62,16 @@ class RecipeView extends View{
             <span class="recipe__info-text">servings</span>
 
             <div class="recipe__info-buttons">
-              <button class="btn--tiny btn--increase-servings">
+              <button data-update-to="${
+                this._data.servings - 1
+              }" class="btn--tiny btn--update-servings">
                 <svg>
                   <use href="${icon}.svg#icon-minus-circle"></use>
                 </svg>
               </button>
-              <button class="btn--tiny btn--increase-servings">
+              <button data-update-to="${
+                this._data.servings + 1
+              }"  class="btn--tiny btn--update-servings" >
                 <svg>
                   <use href="${icon}.svg#icon-plus-circle"></use>
                 </svg>
