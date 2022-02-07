@@ -6,7 +6,7 @@ export { API_URL } from "./config.js";
 
 export const state = {
   recipe: {},
-  search: { query: {}, results: {}, page: 1, resultPerPage: RES_PER_PAGE },
+  search: { query: '', results: [], page: 1, resultPerPage: RES_PER_PAGE },
 };
 
 export const loadSearchResults = async function (query) {
@@ -44,14 +44,13 @@ export const loadRecipe = async function (id) {
   }
 };
 
-export const getSearchResultsPerPage = function(page = 1){
+export const getSearchResultsPerPage = function(page = state.search.page){
+    // if(Object.keys(state.search.results).length===0) return [];
     state.search.page = page;
 
-    const start = (page - 1) * RES_PER_PAGE;
-    const end = page * RES_PER_PAGE;
-
-
-    return state.search.results.slice(start,end);
+    const start = (page - 1) * state.search.resultPerPage;
+    const end = page * state.search.resultPerPage;
+    return state.search.results.slice(start,end) ;
 
 }
 

@@ -18,13 +18,19 @@ const showRecipe = async function () {
     const id = window.location.hash.slice(1);
     console.log(id)
 
-    if(!id) throw new Error('no page found')
+    if(!id) return
 
     // render spinner
     recipeView.renderSpinner(recipeContainer);
 
+    // update search
+    resultView.update(model.getSearchResultsPerPage())
+
+
     // loading recipe
     await model.loadRecipe(id)
+
+
 
     // rendering recipe
 
@@ -59,7 +65,6 @@ const controlSearchResult = async function(){
 
 
     // render pagination
-    console.log('------')
     paginationView.render(model.state.search)
 
   }catch (err){
@@ -76,14 +81,15 @@ const controlPagination = function(goto){
 
 const controlServing = function(updateTo=1){
   model.updateServing(updateTo)
-  recipeView.render(model.state.recipe)
+  recipeView.update(model.state.recipe)
+  // recipeView.render(model.state.recipe)
 
 }
 
 
 const init = function(){
   recipeView.addHandlerRender(showRecipe)
-recipeView.addHandlerUpdateServing(controlServing)
+  recipeView.addHandlerUpdateServing(controlServing)
   searchView.addHandlerSearch(controlSearchResult)
   paginationView.addHandlerClick(controlPagination)
 }
