@@ -7,20 +7,29 @@ export { API_URL } from "./config.js";
 export const state = {
   recipe: {},
   search: { query: '', results: [], page: 1, resultPerPage: RES_PER_PAGE },
+  bookmarks:[]
 };
 
 export const loadSearchResults = async function (query) {
-  const data = await getJSON(`${API_URL}?search=${query}`);
-  console.log(data);
-  const { recipes } = data.data;
-  state.search.results = recipes.map((rec) => {
-    return {
-      id: rec.id,
-      title: rec.title,
-      publisher: rec.publisher,
-      imageUrl: rec["image_url"],
-    };
-  });
+  try {
+    state.search.page = 1;
+    const data = await getJSON(`${API_URL}?search=${query}`);
+    console.log(data);
+
+    const {recipes} = data.data;
+    state.search.results = recipes.map((rec) => {
+      return {
+        id: rec.id,
+        title: rec.title,
+        publisher: rec.publisher,
+        imageUrl: rec["image_url"],
+      };
+    });
+  }
+  catch (err){
+    console.error('err--->'+err.message)
+    throw err.message
+  }
 };
 
 export const loadRecipe = async function (id) {
@@ -28,6 +37,8 @@ export const loadRecipe = async function (id) {
     const { data } = await getJSON(`${API_URL}/${id}`);
 
     let { recipe } = data;
+
+
     // console.log(recipe);
     state.recipe = {
       id: recipe.id,
@@ -39,6 +50,8 @@ export const loadRecipe = async function (id) {
       cookingTime: recipe["cooking_time"],
       ingredients: recipe.ingredients,
     };
+    state.recipe.bookmarked = state.bookmarks.some(bookmark => bookmark.id === recipe.id);
+
   } catch (err) {
     throw err;
   }
@@ -61,5 +74,20 @@ export const updateServing = function(newServing=8){
   state.recipe.ingredients.forEach(ing=>ing.quantity = ing.quantity * newServing/state.recipe.servings)
   state.recipe.servings = newServing;
   // console.log(state.recipe)
+}
+
+export const addBookmark = function(recipe){
+  console.log('add')
+  state.bookmarks.push(recipe)
+
+  state.recipe.bookmarked =  true;
+}
+
+export  const deleteBookmark =function(recipe){
+  console.log('delete')
+
+  const indx = state.bookmarks.findIndex(bookmark=>bookmark.id===recipe.id);
+  state.bookmarks.splice(indx,1);
+  state.recipe.bookmarked = false;
 }
 
