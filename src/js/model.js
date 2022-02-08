@@ -45,7 +45,7 @@ export const loadRecipe = async function (id) {
       title: recipe.title,
       publisher: recipe.publisher,
       sourceUrl: recipe["source_url"],
-      image: recipe["image_url"],
+      imageUrl: recipe["image_url"],
       servings: recipe.servings,
       cookingTime: recipe["cooking_time"],
       ingredients: recipe.ingredients,
@@ -53,6 +53,7 @@ export const loadRecipe = async function (id) {
     state.recipe.bookmarked = state.bookmarks.some(bookmark => bookmark.id === recipe.id);
 
   } catch (err) {
+    console.log(err.message)
     throw err;
   }
 };

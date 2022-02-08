@@ -5,10 +5,12 @@ export default class View{
     _parentElement;
     _data;
     _generateMarkup(){};
-    render(data) {
+    render(data,render=true) {
+
         if(!data || (Array.isArray(data) && data.length===0)) return this.renderError()
         this._data = data;
         const markup = this._generateMarkup();
+        if(!render) return markup;
         this._clear();
         this._parentElement.insertAdjacentHTML("afterbegin", markup);
     }

@@ -5,6 +5,7 @@ import recipeView from "./views/recipeView";
 import searchView from "./views/searchView";
 import resultView from "./views/resultView";
 import paginationView from "./views/paginationView";
+import bookmarkView from "./views/bookmarkView";
 
 const recipeContainer = document.querySelector(".recipe");
 const resultsContainer = document.querySelector(".results");
@@ -26,6 +27,9 @@ const showRecipe = async function () {
     // update search
     resultView.update(model.getSearchResultsPerPage());
 
+    // update bookmark
+    bookmarkView.update(model.state.bookmarks)
+
     // loading recipe
     await model.loadRecipe(id);
 
@@ -34,6 +38,7 @@ const showRecipe = async function () {
     recipeView.render(model.state.recipe);
   } catch (err) {
     recipeView.renderError(err.message);
+    console.log(err.message)
   }
 };
 
@@ -59,7 +64,10 @@ const controlSearchResult = async function () {
     // render pagination
     paginationView.render(model.state.search);
   } catch (err) {
-    recipeView.renderError(err.message);
+    resultView.renderError(err.message);
+    console.log(err.message)
+    throw err
+
   }
 };
 
@@ -78,6 +86,7 @@ const controlAddBookmarked = function () {
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
   else model.deleteBookmark(model.state.recipe);
   recipeView.update(model.state.recipe);
+  bookmarkView.render(model.state.bookmarks);
 };
 
 const init = function () {
