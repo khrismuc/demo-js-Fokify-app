@@ -4,6 +4,7 @@ import { RES_PER_PAGE } from "./config";
 
 export { API_URL } from "./config.js";
 
+console.log('model.js run')
 export const state = {
   recipe: {},
   search: { query: '', results: [], page: 1, resultPerPage: RES_PER_PAGE },
@@ -76,12 +77,15 @@ export const updateServing = function(newServing=8){
   state.recipe.servings = newServing;
   // console.log(state.recipe)
 }
-
+export const persistBookmark = function(){
+  localStorage.setItem('bookmarks',JSON.stringify(state.bookmarks));
+}
 export const addBookmark = function(recipe){
   console.log('add')
   state.bookmarks.push(recipe)
 
   state.recipe.bookmarked =  true;
+  persistBookmark();
 }
 
 export  const deleteBookmark =function(recipe){
@@ -90,5 +94,18 @@ export  const deleteBookmark =function(recipe){
   const indx = state.bookmarks.findIndex(bookmark=>bookmark.id===recipe.id);
   state.bookmarks.splice(indx,1);
   state.recipe.bookmarked = false;
+  persistBookmark();
 }
+
+export const init = function(){
+
+  state.bookmarks.push(...JSON.parse(localStorage.getItem('bookmarks')))
+
+}
+
+init();
+
+
+
+
 
