@@ -6,10 +6,9 @@
   },
   "name": "forkify",
   "version": "1.0.0",
-  "source": "index.html",
   "scripts": {
-    "start": "parcel ",
-    "build": "parcel build "
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
   },
   "description": "no description",
   "author": "elmi-elmi",
