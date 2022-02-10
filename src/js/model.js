@@ -8,6 +8,7 @@ export const state = {
   bookmarks: [],
 };
 
+
 export const loadSearchResults = async function (query) {
   try {
     state.search.page = 1;
