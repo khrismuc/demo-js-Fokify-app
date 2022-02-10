@@ -4,6 +4,7 @@ export default class View{
     _errorMessage;
     _parentElement;
     _data;
+    _message;
     _generateMarkup(){};
     render(data,render=true) {
 
@@ -22,9 +23,7 @@ export default class View{
         const newDom = document.createRange().createContextualFragment(newMarkup);
         const newElement = Array.from(newDom.querySelectorAll('*'));
         const currElement = Array.from(this._parentElement.querySelectorAll('*'));
-        // console.log(newMarkup)
-        // console.log(newDom)
-        // console.log( Array.from(newElement))
+
 
         newElement.forEach((newEl,i)=>{
             const currEl = currElement[i];
@@ -36,9 +35,6 @@ export default class View{
 
             // update attributes
             if(!newEl.isEqualNode(currEl)){
-                // console.log('---------->',currEl)
-                // console.log('---------->',newEl);
-                console.log(!newEl.isEqualNode(currEl) && (newEl.firstChild?.nodeValue.trim() !== ''))
                 Array.from(newEl.attributes).forEach(att=>{
                     currEl.setAttribute(att.name,att.value)
                 })
@@ -80,5 +76,21 @@ export default class View{
     }
     _clear() {
         this._parentElement.innerHTML = "";
+    }
+
+    renderMessage(message = this._message) {
+        const markup = ` <div class="message">
+                    <div>
+                      <svg>
+                        <use href="${icon}#icon-smile"></use>
+                      </svg>
+                    </div>
+                    <p>
+                      ${message}
+                    </p>
+                  </div>`;
+
+        this._clear();
+        this._parentElement.insertAdjacentHTML("afterbegin", markup);
     }
 }

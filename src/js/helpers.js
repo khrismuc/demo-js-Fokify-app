@@ -14,19 +14,19 @@ export const getJSON = async function(url){
     }
 }
 
-export const sendJSON = async function(url,updoalData){
+export const sendJSON = async function(url,uploadData){
     try{
         const fetching = fetch(url,{
             method:'POST',
             headers:{
-                'Content-type':'application/json'
+                'Content-Type':'application/json'
             },
-            body:JSON.stringify(updoalData)
+            body:JSON.stringify(uploadData)
         })
         const res = await Promise.race([fetching,timeout(TIME_OUT)])
         const data = await res.json();
-        if (!res.ok) throw Error(`${data.message} ${res.status}`)
 
+        if (!res.ok) throw Error(`${data.message} ${res.status}`)
         return data
 
     }

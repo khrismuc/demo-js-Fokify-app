@@ -7,21 +7,7 @@ class RecipeView extends View {
   _errorMessage = "No recipes found for your query. Please try again!";
   _message = "No bookmarks yet. Find a nice recipe and bookmark it :)";
 
-  renderMessage(message = this._message) {
-    const markup = ` <div class="message">
-                    <div>
-                      <svg>
-                        <use href="src/img/icons.svg#icon-smile"></use>
-                      </svg>
-                    </div>
-                    <p>
-                      ${message}
-                    </p>
-                  </div>`;
 
-    this._clear();
-    this._parentElement.insertAdjacentHTML("afterbegin", markup);
-  }
 
   addHandlerUpdateServing(handler) {
     this._parentElement.addEventListener("click", function (e) {
