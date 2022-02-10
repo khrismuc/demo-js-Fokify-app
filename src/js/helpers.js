@@ -14,6 +14,27 @@ export const getJSON = async function(url){
     }
 }
 
+export const sendJSON = async function(url,updoalData){
+    try{
+        const fetching = fetch(url,{
+            method:'POST',
+            headers:{
+                'Content-type':'application/json'
+            },
+            body:JSON.stringify(updoalData)
+        })
+        const res = await Promise.race([fetching,timeout(TIME_OUT)])
+        const data = await res.json();
+        if (!res.ok) throw Error(`${data.message} ${res.status}`)
+
+        return data
+
+    }
+    catch (err){
+        console.error(err.message)
+        throw err
+    }
+}
 
 const timeout =function(s){
     return new Promise(function(_,reject){

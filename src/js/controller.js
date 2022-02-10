@@ -6,7 +6,7 @@ import searchView from "./views/searchView";
 import resultView from "./views/resultView";
 import paginationView from "./views/paginationView";
 import bookmarkView from "./views/bookmarkView";
-
+import addRecipeView from "./views/addRecipeView";
 const recipeContainer = document.querySelector(".recipe");
 const resultsContainer = document.querySelector(".results");
 
@@ -106,6 +106,7 @@ const init = function () {
   recipeView.addHandlerUpdateServing(controlServing);
   searchView.addHandlerSearch(controlSearchResult);
   paginationView.addHandlerClick(controlPagination);
+
 
 };
 init();
