@@ -5,13 +5,8 @@ class PaginationView extends View {
   _parentElement = document.querySelector(".pagination");
 
   addHandlerClick(handler) {
-    console.log("-----------------");
-    console.log("this data--->", this._data);
     this._parentElement.addEventListener("click", function (e) {
       const element = e.target.closest(".btn--inline");
-      console.log(element);
-      console.log(element.dataset.goto);
-
       handler(element.dataset.goto);
     });
   }
@@ -23,7 +18,6 @@ class PaginationView extends View {
 
 
     if (page === 1 && numPages > 1) {
-      console.log("1 and others");
       return ` <button data-goto="${
         page + 1
       }" class="btn--inline pagination__btn--next">
@@ -35,7 +29,6 @@ class PaginationView extends View {
     }
 
     if (page > 1 && page < numPages) {
-      console.log(" others");
 
       return `
 
@@ -58,7 +51,6 @@ class PaginationView extends View {
     }
 
     if (page === numPages && numPages > 1) {
-      console.log(" last");
 
       return ` <button data-goto="${
         page - 1

@@ -46,7 +46,7 @@ const createRecipeObject = function(data){
 
 export const loadRecipe = async function (id) {
   try {
-    const data  = await AJAX(`${API_URL}/${id}`);
+    const data  = await AJAX(`${API_URL}${id}?key=${KEY_API}`);
 
 
     state.recipe = createRecipeObject(data)
@@ -101,7 +101,7 @@ export const addRecipe = async function (newRecipe) {
     const ingredients = Object.entries(newRecipe)
       .filter((entry) => entry[0].startsWith("ingredient") && entry[1] !== "")
       .map((ing) => {
-        const ingArr = ing[1].split(",");
+        const ingArr = ing[1].split(",").map(el=>el.trim());
         if (ingArr.length !== 3) throw new Error("Wrong ingredient format!");
         const [ quantity, unit,description] = ingArr;
 
@@ -122,7 +122,6 @@ export const addRecipe = async function (newRecipe) {
     const data = await AJAX(`${API_URL}?key=${KEY_API}`,recipe)
 
     state.recipe = createRecipeObject(data)
-    // state.recipe.bookmarked = true;
 
     addBookmark(state.recipe)
 

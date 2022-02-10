@@ -18,19 +18,17 @@ const resultsContainer = document.querySelector(".results");
 const showRecipe = async function () {
   try {
     const id = window.location.hash.slice(1);
-    console.log(id);
 
     if (!id) return;
 
     // render spinner
     recipeView.renderSpinner(recipeContainer);
 
+
     // update search
     resultView.update(model.getSearchResultsPerPage());
 
     // update bookmark
-    console.log('controller----')
-    console.log(model.state.bookmarks)
     // bookmarkView.render(model.state.bookmarks);
     bookmarkView.update(model.state.bookmarks)
 
@@ -42,16 +40,16 @@ const showRecipe = async function () {
 
     recipeView.render(model.state.recipe);
 
+
   } catch (err) {
     recipeView.renderError(err.message);
-    console.log(err.message)
+    console.error(err.message)
     throw err
   }
 };
 
 const controlSearchResult = async function () {
   try {
-    console.log("control search");
     // get query
     const query = searchView.getQuery();
     // if(!query) return;
@@ -63,7 +61,6 @@ const controlSearchResult = async function () {
     await model.loadSearchResults(query);
 
     // render result
-    console.log(model.state);
 
     // resultView.render(model.state.search.results)
     resultView.render(model.getSearchResultsPerPage());
@@ -72,7 +69,7 @@ const controlSearchResult = async function () {
     paginationView.render(model.state.search);
   } catch (err) {
     resultView.renderError(err.message);
-    console.log(err.message)
+    console.error(err.message)
     throw err
 
   }
@@ -102,18 +99,14 @@ const controlBookmark = function(){
 
 const controlAddRecipe =  async function(data){
   try {
-    console.log('-----before------')
-    console.log(model.state.recipe)
 
     addRecipeView.renderSpinner()
     await model.addRecipe(data);
     recipeView.render(model.state.recipe)
 
-    console.log('-----after------')
-
-    console.log(model.state.recipe)
 
     addRecipeView.renderMessage()
+
     setTimeout(function(){
       addRecipeView.toggleWindow()
     },MODAL_CLOSE_SEC*1000)

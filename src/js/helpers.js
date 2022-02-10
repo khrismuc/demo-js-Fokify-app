@@ -1,26 +1,27 @@
-import {TIME_OUT} from './config'
+import { TIME_OUT } from "./config";
 
-export const AJAX = async function(url, uploadData=undefined){
-    try{
-       const fetchPro =   uploadData?fetch(url,{
-           method:'POST',
-           headers:{
-               'Content-Type':'application/json'
-           },
-           body:JSON.stringify(uploadData)
-       }):fetch(url);
+export const AJAX = async function (url, uploadData = undefined) {
+  try {
+    const fetchPro = uploadData
+      ? fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(uploadData),
+        })
+      : fetch(url);
 
-        const res = await Promise.race([fetchPro,timeout(TIME_OUT)])
-        const data = await res.json();
+    const res = await Promise.race([fetchPro, timeout(TIME_OUT)]);
+    const data = await res.json();
 
-        if (!res.ok) throw Error(`${data.message} ${res.status}`)
-        return data
-
-    }catch(err){
-        console.error(err.message)
-        throw err
-    }
-}
+    if (!res.ok) throw Error(`${data.message} ${res.status}`);
+    return data;
+  } catch (err) {
+    console.error(err.message);
+    throw err;
+  }
+};
 //
 // export const getJSON = async function(url){
 //     try {
@@ -58,8 +59,10 @@ export const AJAX = async function(url, uploadData=undefined){
 //     }
 // }
 
-const timeout =function(s){
-    return new Promise(function(_,reject){
-        setTimeout(function(){reject(new Error(`Request took too long! Timeout after ${s} second.`))},1000*s)
-    })
-}
+const timeout = function (s) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error(`Request took too long! Timeout after ${s} second.`));
+    }, 1000 * s);
+  });
+};
