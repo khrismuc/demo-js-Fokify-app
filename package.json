@@ -4,12 +4,12 @@
     "parcel": "^2.2.1",
     "prettier": "^2.5.1"
   },
-  "default": "index.html",
   "name": "forkify",
   "version": "1.0.0",
+  "source": "index.html",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html --dist-dir ./dist"
+    "build": "parcel build "
   },
   "description": "no description",
   "author": "elmi-elmi",
